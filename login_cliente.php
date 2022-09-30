@@ -58,7 +58,7 @@ if ($_POST) {
 
   <div class="jumbotron mb-0 d-flex align-items-center" style="height: 100vh;">
     <div class="container w-50 bg-white p-5">
-      <h1 class="text-secondary text-center mb-4">Iniciar Sesion - Paciente</h1>
+      <h1 class="text-secondary text-center mb-4">Iniciar Sesion - Cliente</h1>
       <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Correo Electronico</label>
