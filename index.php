@@ -54,7 +54,7 @@ $rol = $_SESSION['rol'];
       </div>
       <div class="links d-flex flex-column align-items-center justify-content-around mt-5">
         <?php if($rol == 'adm' || $rol == 'personal'){ ?>
-          <a href="Paciente/index.php" class="text-white">Paciente</a>
+          <a href="Cliente/index.php" class="text-white">Cliente</a>
           <a href="Personal/index.php" class="text-white">Personal</a>
           <a href="Consulta/index.php" class="text-white">Consultas</a>
         <?php } else { ?>

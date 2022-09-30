@@ -19,7 +19,7 @@
 
     <div class="jumbotron mb-0 d-flex align-items-center" style="height: 100vh">
         <div class="container text-center w-50 bg-white p-5">
-            <a href="login_paciente.php" class="btn btn-danger mb-5">Iniciar Sesion - Paciente</a>
+            <a href="login_cliente.php" class="btn btn-danger mb-5">Iniciar Sesion - Cliente</a>
             <br>
             <a href="login_personal.php" class="btn btn-danger">Iniciar Sesion - Personal</a>
         </div>

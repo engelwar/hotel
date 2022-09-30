@@ -31,11 +31,11 @@ $nombres = $_SESSION['nombres'];
   if (isset($_GET['ci']) && $_GET['ci'] != null) {
     $ci = $_GET['ci'];
 
-    $sqlPersonal   = ("SELECT * FROM personal where CI = '" . $ci . "' ");
+    $sqlPersonal   = ("SELECT * FROM personal where carnet = '" . $ci . "' ");
     $queryPersonal = mysqli_query($con, $sqlPersonal);
     $cantidad     = mysqli_num_rows($queryPersonal);
   } else {
-    $sqlPersonal   = ("SELECT * FROM personal ORDER BY CODIGO DESC ");
+    $sqlPersonal   = ("SELECT * FROM personal ORDER BY codigo  DESC ");
     $queryPersonal = mysqli_query($con, $sqlPersonal);
     $cantidad     = mysqli_num_rows($queryPersonal);
   }

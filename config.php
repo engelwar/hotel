@@ -1,6 +1,6 @@
 <?php
 $usuario  = "root";
-$password = "";
+$password = "Sistemas2020";
 $servidor = "localhost";
 $basededatos = "hotel";
 $con = mysqli_connect($servidor, $usuario, $password) or die("No se ha podido conectar al Servidor");
