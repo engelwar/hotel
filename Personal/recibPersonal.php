@@ -3,42 +3,34 @@ include('../config.php');
 $nombres      = $_REQUEST['nombres'];
 $apellidos 	 = $_REQUEST['apellidos'];
 $ci 	 = $_REQUEST['ci'];
-$fecha_nacimiento 	 = $_REQUEST['fecha_nacimiento'];
+$celular 	 = $_REQUEST['celular'];
 $direccion 	 = $_REQUEST['direccion'];
-$telefono 	 = $_REQUEST['telefono'];
 $correo 	 = $_REQUEST['correo'];
-$cargo 	 = $_REQUEST['cargo'];
-$especialidad 	 = $_REQUEST['especialidad'];
-$turno 	 = $_REQUEST['turno'];
+$contraseña 	 = $_REQUEST['ci'];
 $nacionalidad 	 = $_REQUEST['nacionalidad'];
+$cargo 	 = $_REQUEST['cargo'];
 
 $QueryInsert = ("INSERT INTO personal(
-    NOMBRE,
-    APELLIDO,
-    CI,
-    FECHA_NACIMIENTO,
-    DIRECCION,
-    TELEFONO,
-    CORREO,
-    CARGO,
-    ESPECIALIDAD,
-    TURNO,
-    NACIONALIDAD,
-    ROL
+    nombres,
+    apellidos,
+    carnet,
+    celular,
+    direccion,
+    correo,
+    contraseña,
+    nacionalidad,
+    cargo
 )
 VALUES (
     '".$nombres. "',
     '".$apellidos. "',
     '".$ci."',
-    '".$fecha_nacimiento."',
+    '".$celular."',
     '".$direccion."',
-    '".$telefono."',
     '".$correo."',
-    '".$cargo."',
-    '".$especialidad."',
-    '".$turno."',
+    '".$contraseña."',
     '".$nacionalidad."',
-    'personal'
+    '".$cargo."'
 )");
 $inserInmueble = mysqli_query($con, $QueryInsert);
 

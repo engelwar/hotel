@@ -5,31 +5,27 @@ $idRegistros = $_REQUEST['id'];
 $nombres      = $_REQUEST['nombres'];
 $apellidos 	 = $_REQUEST['apellidos'];
 $ci 	 = $_REQUEST['ci'];
-$fecha_nacimiento 	 = $_REQUEST['fecha_nacimiento'];
+$celular 	 = $_REQUEST['celular'];
 $direccion 	 = $_REQUEST['direccion'];
-$telefono 	 = $_REQUEST['telefono'];
 $correo 	 = $_REQUEST['correo'];
-$cargo 	 = $_REQUEST['cargo'];
-$especialidad 	 = $_REQUEST['especialidad'];
-$turno 	 = $_REQUEST['turno'];
+$contraseña 	 = $_REQUEST['ci'];
 $nacionalidad 	 = $_REQUEST['nacionalidad'];
+$cargo 	 = $_REQUEST['cargo'];
 
 
 $update = ("UPDATE personal 
 	SET 
-	NOMBRE  ='" .$nombres. "',
-	APELLIDO  ='" .$apellidos. "',
-	CI	 ='" .$ci. "', 
-	FECHA_NACIMIENTO ='" .$fecha_nacimiento. "', 
-	DIRECCION ='" .$direccion. "', 
-	TELEFONO ='" .$telefono. "', 
-	CORREO ='" .$correo. "', 
-	CARGO ='" .$cargo. "', 
-	ESPECIALIDAD ='" .$especialidad. "', 
-	TURNO ='" .$turno. "', 
-	NACIONALIDAD ='" .$nacionalidad. "' 
+	nombres  ='" .$nombres. "',
+	apellidos  ='" .$apellidos. "',
+	carnet	 ='" .$ci. "', 
+	celular ='" .$celular. "', 
+	direccion ='" .$direccion. "', 
+	correo ='" .$correo. "', 
+	contraseña ='" .$contraseña. "', 
+	nacionalidad ='" .$nacionalidad. "', 
+	cargo ='" .$cargo. "'
 
-WHERE CODIGO ='" .$idRegistros. "'
+WHERE codigo  ='" .$idRegistros. "'
 ");
 $result_update = mysqli_query($con, $update);
 
