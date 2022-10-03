@@ -46,9 +46,12 @@ $queryEspecialistas = mysqli_query($con, $sqlEspecialistas);
           <div class="w-50 m-auto">
             <input id="fecha" type="date" class="form-control form-control-sm" name="fecha">
           </div>
+          <div class="w-50 m-auto">
+            <input id="fecha" type="date" class="form-control form-control-sm" name="fecha">
+          </div>
         </div>
         <div class="col-md-12 mt-2">
-          <button type="submit" class="btn btn-danger">Consultar Medicos</button>
+          <button type="submit" class="btn btn-danger">Consultar</button>
         </div>
       </div>
     </form>

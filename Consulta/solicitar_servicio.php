@@ -14,69 +14,17 @@ $rol = $_SESSION['rol'];
 
 include("../config.php");
 
-$sqlServicios = ("SELECT * FROM servicios");
+$sqlServicios = ("SELECT * FROM servicio");
 $queryServicios = mysqli_query($con, $sqlServicios);
 
-if (isset($_GET['codigo_servicio']) && $_GET['codigo_servicio'] != 'todos') {
-  $codigo_servicio = $_GET['codigo_servicio'];
-
-  $sqlConsultaMedica = (" SELECT c.NUMERO_CONSULTA FROM consulta_medica c, reservas r WHERE c.CODIGO_RESERVA = r.CODIGO_RESERVA AND r.CODIGO_PACIENTE = '" . $id . "' ");
-  $queryConsultaMedica = mysqli_query($con, $sqlConsultaMedica);
-
-  if ($queryConsultaMedica) {
-    $row = $queryConsultaMedica->fetch_assoc();
-    $numero_consulta = $row['NUMERO_CONSULTA'];
-    $fechaSolicitud = date('Y-m-d H:i:s');
-    $sqlSolicitudServicio = (" INSERT INTO solicitud_servicios(
-      CODIGO_PACIENTE,
-      NUMERO_CONSULTA,
-      FECHA
-    )
-    VALUES(
-      '" . $id . "',
-      '" . $numero_consulta . "',
-      '" . $fechaSolicitud . "'
-    ) ");
-    $querySolicitudServicio = mysqli_query($con, $sqlSolicitudServicio);
-    if ($querySolicitudServicio) {
-      $sqlConsultaSolicitudServicio = (" SELECT NUMERO_SOLICITUD FROM solicitud_servicios WHERE CODIGO_PACIENTE = '" . $id . "' ");
-      $queryConsultaSolicitudServicio = mysqli_query($con, $sqlConsultaSolicitudServicio);
-      $row2 = $queryConsultaSolicitudServicio->fetch_assoc();
-      $numero_solicitud = $row2['NUMERO_SOLICITUD'];
-      $sqlDetalleSolicitud = (" INSERT INTO detalle_solicitud_servicios(
-        NUMERO_SOLICITUD,
-        CODIGO_SERVICIO
-      )
-      VALUES(
-        '" . $numero_solicitud . "',
-        '" . $codigo_servicio . "'
-      ) ");
-      $queryDetalleSolicitud = mysqli_query($con, $sqlDetalleSolicitud);
-      if ($queryDetalleSolicitud) {
-        $sqlDetalleResultado = (" INSERT INTO detalle_resultados_servicios(
-          NUMERO_SOLICITUD_SERVICIO,
-          DETALLE_RESULTADO_SERVICIO
-        )
-        VALUES (
-          '" . $numero_solicitud . "',
-          null
-        ) ");
-        $queryDetalleResultado = mysqli_query($con, $sqlDetalleResultado);
-        if ($queryDetalleResultado) {
-          header('Location: index.php');
-        } else {
-          echo "error";
-        }
-      }
-    }
-  }
-}
+$sqlCliente = ("SELECT * FROM cliente");
+$queryCliente = mysqli_query($con, $sqlCliente);
 
 ?>
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between">
   <!-- Navbar Brand-->
-  <a class="navbar-brand ps-3" href="../index.php">CONSULTORIO</a>
+  <a class="navbar-brand ps-3" href="../index.php">CONSULTAS</a>
   <!-- Navbar-->
   <span class="text-info fs-2"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
       <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
@@ -91,14 +39,28 @@ if (isset($_GET['codigo_servicio']) && $_GET['codigo_servicio'] != 'todos') {
     <div class="text-center mb-4">
       <h2>Solicitar Servicio</h2>
     </div>
-    <form action="solicitar_servicio.php" method="$_POST">
+    <form action="registrar_servicio.php" method="$_POST">
+      <div class="w-50 col-md-12 mt-2 m-auto">
+          <label for="cantidad" class="form-label">Cantidad</label>
+          <input type="number" class="form-control" name="cantidad" required='true' autofocus>
+      </div>
+      <div class="w-50 m-auto text-center mt-2">
+        <select class="form-select w-100" aria-label="Default select example" name="cliente">
+          <option selected value="">Cliente</option>
+          <?php
+          while ($dataCliente = mysqli_fetch_array($queryCliente)) {
+          ?>
+            <option value="<?php echo $dataCliente['codigo_cliente']; ?>"><?php echo $dataCliente['nombres'] .' '. $dataCliente['apellidos']; ?></option>
+          <?php } ?>
+        </select>
+      </div>
       <div class="w-50 m-auto text-center">
-        <select class="form-select w-100" aria-label="Default select example" name="codigo_servicio">
-          <option selected value="todos">Todos</option>
+        <select class="form-select w-100" aria-label="Default select example" name="servicio">
+          <option selected value="">Servicios</option>
           <?php
           while ($dataServicios = mysqli_fetch_array($queryServicios)) {
           ?>
-            <option value="<?php echo $dataServicios['CODIGO_SERVICIO']; ?>"><?php echo $dataServicios['DESCRIPCION']; ?></option>
+            <option value="<?php echo $dataServicios['codigo_servicio']; ?>"><?php echo $dataServicios['descripcion'] .' '. $dataServicios['precio']; ?></option>
           <?php } ?>
         </select>
       </div>

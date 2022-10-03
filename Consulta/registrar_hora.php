@@ -13,20 +13,49 @@ $nombres = $_SESSION['nombres'];
 
 include('../config.php');
 
-if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
-  $especialidadPersonal = $_GET['especialidad'];
-  $sqlPersonal   = ("SELECT CODIGO, NOMBRE, APELLIDO, ESPECIALIDAD FROM personal WHERE ESPECIALIDAD = '".$especialidadPersonal."' ");
-  $queryPersonal = mysqli_query($con, $sqlPersonal);
-} else {
-  $sqlPersonal   = ("SELECT * FROM personal where ESPECIALIDAD = '" . null . "' ");
-  $queryPersonal = mysqli_query($con, $sqlPersonal);
-}
+$fecha = $_GET['fecha'];
+
+$sqlReservas   = ("
+SELECT
+cliente.nombres,
+cliente.apellidos,
+cliente.carnet,
+cliente.celular,
+cliente.correo,
+reserva.descripcion AS descripcionR,
+reserva.fecha_reserva,
+reserva.fecha_entrada,
+reserva.fecha_salida,
+reserva.numero_habitacion,
+habitacion.descripcion,
+habitacion.tipo,
+habitacion.precio
+FROM reserva
+JOIN habitacion ON reserva.numero_habitacion = habitacion.numero
+JOIN cliente ON reserva.codigo_cliente = cliente.codigo_cliente
+");
+$queryReserva = mysqli_query($con, $sqlReservas);
+
+$sqlDisponible   = ("
+SELECT
+reserva.descripcion AS descripcionR,
+reserva.fecha_reserva,
+reserva.fecha_entrada,
+reserva.fecha_salida,
+reserva.numero_habitacion,
+habitacion.descripcion,
+habitacion.tipo,
+habitacion.precio
+FROM reserva
+JOIN habitacion ON reserva.numero_habitacion = habitacion.numero
+");
+$queryDisponible = mysqli_query($con, $sqlDisponible);
 
 ?>
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between">
   <!-- Navbar Brand-->
-  <a class="navbar-brand ps-3" href="../index.php">CONSULTORIO</a>
+  <a class="navbar-brand ps-3" href="../index.php"></a>
   <!-- Navbar-->
   <span class="text-info fs-2"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
       <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
@@ -39,32 +68,75 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
 <div class="jumbotron">
   <div class="container text-center w-50 shadow-lg p-4">
     <div class="text-center mb-4">
-      <h2>Registrar Consulta</h2>
+      <h2>Registros de Reserva</h2>
+    </div>
+    <div class="row clearfix flex-row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="body">
+          <div class="row clearfix">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-md-12 p-2">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">Nombres</th>
+                          <th scope="col">Apellidos</th>
+                          <th scope="col">CI</th>
+                          <th scope="col">Celular</th>
+                          <th scope="col">Correo</th>
+                          <th scope="col">Descripcion</th>
+                          <th scope="col">Fecha Reserva</th>
+                          <th scope="col">Fecha Entrada</th>
+                          <th scope="col">Fecha Salida</th>
+                          <th scope="col">Num. Habitacion</th>
+                          <th scope="col">Descripcion</th>
+                          <th scope="col">Tipo</th>
+                          <th scope="col">Precio</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        while ($dataCliente = mysqli_fetch_array($queryReserva)) { ?>
+                          <tr>
+                            <td><?php echo $dataCliente['nombres']; ?></td>
+                            <td><?php echo $dataCliente['apellidos']; ?></td>
+                            <td><?php echo $dataCliente['carnet']; ?></td>
+                            <td><?php echo $dataCliente['celular']; ?></td>
+                            <td><?php echo $dataCliente['correo']; ?></td>
+                            <td><?php echo $dataCliente['descripcionR']; ?></td>
+                            <td><?php echo $dataCliente['fecha_reserva']; ?></td>
+                            <td><?php echo $dataCliente['fecha_entrada']; ?></td>
+                            <td><?php echo $dataCliente['fecha_salida']; ?></td>
+                            <td><?php echo $dataCliente['numero_habitacion']; ?></td>
+                            <td><?php echo $dataCliente['descripcion']; ?></td>
+                            <td><?php echo $dataCliente['tipo']; ?></td>
+                            <td><?php echo $dataCliente['precio']; ?></td>
+                          </tr>
+                        <?php } ?>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-md-12 mt-4 border p-4">
       <form action="accion_registra_reserva.php" method="$_POST" class="row flex-column" id="form_consulta">
         <input type="text" name="idPaciente" value="<?php echo $id; ?>" class="d-none">
         <label for="" class="mr-4">
-          <h4>Medicos:</h4>
+          <h4>Habitaciones Disponibles:</h4>
         </label>
         <select class="form-select" multiple aria-label="multiple select example" name="idMedico" id="idMedico" required>
           <?php
-          while ($dataPersonal = mysqli_fetch_array($queryPersonal)) {
+          while ($dataDisponible = mysqli_fetch_array($queryDisponible)) {
           ?>
-            <option value="<?php echo $dataPersonal['CODIGO']; ?>"><?php echo $dataPersonal['NOMBRE'] . ' ' . $dataPersonal['APELLIDO']; ?></option>
+            <option value="<?php echo $dataDisponible['numero_habitacion']; ?>"><?php echo $dataDisponible['descripcion'] . ' ' . $dataDisponible['tipo'] . ' ' . $dataDisponible['precio']; ?></option>
           <?php } ?>
         </select>
-        <label for="" class="mr-4">
-          <h4>Fecha:</h4>
-        </label>
-        <input type="date" id="fecha_consulta" class="form-control" name="fecha_consulta" step="1" autofocus value="" required>
-
-        <button type="button" id="actu" class="btn btn-info" onclick="select()">Consultar Horarios</button>
-
-        <label for="" class="mr-4">
-          <h4>Horarios:</h4>
-        </label>
-        <select class="form-select" multiple aria-label="multiple select example" name="id_horario" id="horas" required></select>
         <div class="col-md-12 mt-2">
           <button type="submit" class="btn btn-danger">Registrar Reserva</button>
         </div>
@@ -72,7 +144,7 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
     </div>
   </div>
 </div>
-<script>
+<!-- <script>
   function select() {
     var medico_array = $('#idMedico').val();
     var medico = medico_array[0];
@@ -99,6 +171,6 @@ if (isset($_GET['especialidad']) && $_GET['especialidad'] != null) {
       }
     });
   };
-</script>
+</script> -->
 
 <?php include('../include/footer.php') ?>

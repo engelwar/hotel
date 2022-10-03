@@ -28,26 +28,15 @@ $rol = $_SESSION['rol'];
 
 <div class="jumbotron d-flex align-items-center">
   <div class="container d-flex flex-column align-items-center" style="gap: 2rem;">
-  <?php if($rol == 'rrhh'){ ?>
-    <a href="especialidades.php" class="btn btn-primary w-25">Consultar especialidades</a>
-    <a href="registrar_reserva.php" class="btn btn-primary w-25">Registrar Reserva de Consulta</a>
-    <a href="generar_consulta.php" class="btn btn-primary w-25">Generar Consulta</a>
-    <a href="asignar_medico.php" class="btn btn-primary w-25">Asignar Medico a Consulta</a>
-    <a href="consultar_paciente.php" class="btn btn-primary w-25">Consultar Paciente</a>
-    <a href="detalle_resultados_servicios.php" class="btn btn-primary w-25">Detalle Resultado Servicio</a>
-    <a href="solicitud_analisis.php" class="btn btn-primary w-25">Solicitud de Analisis</a>
-    <a href="resultado_analisis.php" class="btn btn-primary w-25">Resultado de Analisis</a>
-  <?php }elseif($rol == 'personal'){ ?>
-    <a href="especialidades.php" class="btn btn-primary w-25">Consultar especialidades</a>
-    <a href="generar_consulta.php" class="btn btn-primary w-25">Generar Consulta</a>
-    <a href="consultar_paciente.php" class="btn btn-primary w-25">Consultar Paciente</a>
-    <a href="detalle_resultados_servicios.php" class="btn btn-primary w-25">Detalle Resultado Servicio</a>
-    <a href="resultado_analisis.php" class="btn btn-primary w-25">Resultado de Analisis</a>
+  <?php if($rol == 'adm'){ ?>
+    <a href="registrar_reserva.php" class="btn btn-primary w-25">Registrar Reserva</a>
+    <a href="solicitar_servicio.php" class="btn btn-primary w-25">Registrar Servicio</a>
+    <a href="solicitar_acompañante.php" class="btn btn-primary w-25">Registrar Acompañantes</a>
+    <a href="consultar_cliente_servicios.php" class="btn btn-primary w-25">Consultar Cliente Servicios</a>
+    <a href="consultar_cliente_acompañante.php" class="btn btn-primary w-25">Consultar Cliente Acompañante</a>
   <?php } else{ ?>
-    <a href="especialidades.php" class="btn btn-primary w-25">Consultar especialidades</a>
     <a href="registrar_reserva.php" class="btn btn-primary w-25">Registrar Reserva de Consulta</a>
-    <a href="consultar_paciente.php" class="btn btn-primary w-25">Consultar Paciente</a>
-    <a href="solicitud_analisis.php" class="btn btn-primary w-25">Solicitud de Analisis</a>
+    <a href="consultar_paciente.php" class="btn btn-primary w-25">Consultar Cliente</a>
   <?php } ?>
   </div>
 </div>
